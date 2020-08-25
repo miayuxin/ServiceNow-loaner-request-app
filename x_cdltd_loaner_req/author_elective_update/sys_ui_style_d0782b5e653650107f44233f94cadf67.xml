@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_style">
+    <sys_ui_style action="DELETE">
+        <alt/>
+        <element>item_type</element>
+        <name>x_cdltd_loaner_req_loaner_request</name>
+        <style>background-color-PeachPuff;</style>
+        <sys_class_name>sys_ui_style</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-08-25 16:44:09</sys_created_on>
+        <sys_id>d0782b5e653650107f44233f94cadf67</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_cdltd_loaner_req_loaner_request</sys_name>
+        <sys_package display_value="Loaner Request" source="x_cdltd_loaner_req">6101738e657e10107f44233f94cadfdd</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Loaner Request">6101738e657e10107f44233f94cadfdd</sys_scope>
+        <sys_update_name>sys_ui_style_d0782b5e653650107f44233f94cadf67</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-08-25 16:44:09</sys_updated_on>
+        <value>cmdb_ci_computer</value>
+    </sys_ui_style>
+    <sys_translated_text action="DELETE" query="documentkey=d0782b5e653650107f44233f94cadf67"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Loaner Request">6101738e657e10107f44233f94cadfdd</application>
+        <file_path/>
+        <instance_id>a9bd0cf5db7ed058d7b8f256b9961941</instance_id>
+        <instance_name>adf-aug-102-dev-032</instance_name>
+        <name>sys_ui_style_d0782b5e653650107f44233f94cadf67</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_style"><sys_ui_style action="INSERT_OR_UPDATE"><alt/><element>item_type</element><name>x_cdltd_loaner_req_loaner_request</name><style>background-color-PeachPuff;</style><sys_class_name>sys_ui_style</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2020-08-25 16:44:09</sys_created_on><sys_id>d0782b5e653650107f44233f94cadf67</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_cdltd_loaner_req_loaner_request</sys_name><sys_package display_value="Loaner Request" source="x_cdltd_loaner_req">6101738e657e10107f44233f94cadfdd</sys_package><sys_policy/><sys_scope display_value="Loaner Request">6101738e657e10107f44233f94cadfdd</sys_scope><sys_update_name>sys_ui_style_d0782b5e653650107f44233f94cadf67</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2020-08-25 16:44:09</sys_updated_on><value>cmdb_ci_computer</value></sys_ui_style><sys_translated_text action="delete_multiple" query="documentkey=d0782b5e653650107f44233f94cadf67"/></record_update>]]></payload>
+        <payload_hash>-523864650</payload_hash>
+        <record_name>x_cdltd_loaner_req_loaner_request</record_name>
+        <reverted_from/>
+        <source>a9013b8e657e10107f44233f94cadfea</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-08-25 16:44:09</sys_created_on>
+        <sys_id>d0782b5e653650107f44233f94cadf69</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>174268169630000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-08-25 16:44:09</sys_updated_on>
+        <type>Style</type>
+        <update_guid>1c782b5e35365010ea41b9e4ac76a968</update_guid>
+        <update_guid_history>1c782b5e35365010ea41b9e4ac76a968:-523864650</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-08-25 16:57:33</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_style">sys_ui_style</sys_db_object>
+        <sys_id>1093f14aad0c40008de0622faba44000</sys_id>
+        <sys_metadata>d0782b5e653650107f44233f94cadf67</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_cdltd_loaner_req_loaner_request</sys_name>
+        <sys_package display_value="Loaner Request" source="x_cdltd_loaner_req">6101738e657e10107f44233f94cadfdd</sys_package>
+        <sys_parent display_value="Loaner Request">21a17f8e657e10107f44233f94cadf6d</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="Loaner Request">6101738e657e10107f44233f94cadfdd</sys_scope>
+        <sys_scope_delete display_value="">15f5a266e92f4a7d8350e324d267bad1</sys_scope_delete>
+        <sys_update_name>sys_ui_style_d0782b5e653650107f44233f94cadf67</sys_update_name>
+        <sys_update_version display_value="sys_ui_style_d0782b5e653650107f44233f94cadf67">d0782b5e653650107f44233f94cadf69</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-08-25 16:57:33</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

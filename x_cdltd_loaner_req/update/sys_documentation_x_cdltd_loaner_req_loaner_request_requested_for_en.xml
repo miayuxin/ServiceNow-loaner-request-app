@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="requested_for" label="Requested for" language="en" table="x_cdltd_loaner_req_loaner_request">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>requested_for</element>
+            <help/>
+            <hint/>
+            <label>Requested for</label>
+            <language>en</language>
+            <name>x_cdltd_loaner_req_loaner_request</name>
+            <plural>Requested for</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2020-08-25 16:15:12</sys_created_on>
+            <sys_id>5cd1e79a653650107f44233f94cadf7f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Requested for</sys_name>
+            <sys_package display_value="Loaner Request" source="x_cdltd_loaner_req">6101738e657e10107f44233f94cadfdd</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Loaner Request">6101738e657e10107f44233f94cadfdd</sys_scope>
+            <sys_update_name>sys_documentation_x_cdltd_loaner_req_loaner_request_requested_for_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2020-08-25 16:15:12</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>
