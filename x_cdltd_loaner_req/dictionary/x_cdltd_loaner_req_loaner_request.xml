@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element extends="task" label="Loaner Request" max_length="40" name="x_cdltd_loaner_req_loaner_request" sizeclass="1" type="collection">
+    <element extends="task" label="Loaner Request" max_length="40" name="x_cdltd_loaner_req_loaner_request" sizeclass="3" type="collection">
         <element attributes="edge_encryption_enabled=true" choice="1" default="santa clara" label="Depot" max_length="40" name="depot" type="string">
             <choice>
                 <element inactive_on_update="false" label="New York" sequence="0" value="new york"/>
