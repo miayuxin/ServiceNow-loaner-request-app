@@ -19,10 +19,13 @@
                 <element inactive_on_update="false" label="Projector" sequence="2" value="projector"/>
             </choice>
         </element>
+        <element attributes="edge_encryption_enabled=true" label="Overdue reminder" max_length="40" name="last_overdue_reminder" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true" label="Location to be used" max_length="40" name="location_to_be_used" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Other" max_length="40" name="other" type="string"/>
+        <element label="Overdue count" max_length="40" name="overdue_count" type="integer"/>
         <element attributes="edge_encryption_enabled=true" label="Pick up reminder" max_length="40" name="pick_up_reminder" type="glide_date_time"/>
         <element attributes="encode_utf8=false" label="Requested for" mandatory="true" max_length="32" name="requested_for" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Return reminder" max_length="40" name="return_reminder" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true" label="Start date" mandatory="true" max_length="40" name="start_date" type="glide_date_time"/>
     </element>
 </database>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_cdltd_loaner_req.LoanerUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>LoanerUtils</name>
+        <script><![CDATA[var LoanerUtils = Class.create();
+LoanerUtils.prototype = {
+  /**********
+   * Initialization stuff here...
+   *
+   **********/
+  initialize : function() {
+    this.overdueRemindTime = gs.getProperty('x_cdltd_loaner_req.overdue.remindtime', 24) * 60 * 60 * 1000;
+    this.pickupLeadTime    = gs.getProperty('x_cdltd_loaner_req.pickup.leadtime', 24) * 60 * 60 * 1000;
+    this.returnRemindTime  = gs.getProperty('x_cdltd_loaner_req.return.remindtime', 24) * 60 * 60 * 1000;
+	  
+	this.appScopeName = gs.getCurrentScopeName();
+	this.loanerTableName = this.appScopeName + '_loaner_request';
+	this.pickupEvent = this.appScopeName + '.pickUp';
+	this.returnEvent = this.appScopeName + '.return';
+	this.remindEvent = this.appScopeName + '.reminder';
+	this.overdueEvent = this.appScopeName + '.overdue';
+  },
+
+  /**********
+   *
+   * getOverdueRequests - retrieve a list of overdue records
+   *
+   * @param - None
+   * @return: array of sys_ids
+   *
+   **********/
+  getOverdueRequests : function() {
+
+    var a = [];
+    var gr = new GlideRecord(this.loanerTableName);
+    
+	var rightNow = new GlideDateTime().getDisplayValue();
+    gr.addQuery('end_date', '<=', rightNow);
+    gr.addQuery('state', 17);
+    gr.query();
+
+    while (gr.next()) {
+      a.push(gr.sys_id.toString());
+    }
+    return a;
+  },
+
+  /**********
+   *
+   * timeToRemindOverdue - Use the passed in ID to check if the record is time to remind again
+   *
+   * @param - id: sys_id of the loaner record to check
+   * @return - boolean: true = time to remind
+   *
+   **********/
+  timeToRemindOverdue : function(id) {
+
+    var gr = new GlideRecord(this.loanerTableName);
+	  
+	  var noticeTime = new GlideDateTime();
+	  var tempDate = noticeTime.add(this.overdueRemindTime) + '';
+
+    if (!gr.get(id)) {
+      gs.log('>>>DEBUG: LoanerUtils: timeToRemindOverdue(): FAILED TO RETRIEVE RECORD');
+      return false;
+    }
+    var baseDate = (gr.last_overdue_reminder == '') ? gr.end_date : gr.last_overdue_reminder;
+
+    return (baseDate <= tempDate) ? true : false;
+  },
+
+  /**********
+   *
+   * sendOverdueReminder - Queue an event to send a reminder and update the necessary
+   *                       record fields to indicate they've been reminded
+   *
+   * @param - id: sys_id of the loaner record to check
+   * @return - None
+   *
+   **********/
+  sendOverdueReminder : function(id) {
+
+    var gr = new GlideRecord(this.loanerTableName);
+
+    if (!gr.get(id)) {
+      gs.log('>>>DEBUG: LoanerUtils: setLastOverdueReminder(): FAILED TO RETRIEVE RECORD');
+      return;
+    }
+    ++gr.overdue_count;
+
+    // Record the last time a reminder was sent
+    gr.last_overdue_reminder = new GlideDateTime().getDisplayValue();
+    gr.update();
+
+    // Send the overdue reminder
+    gs.eventQueue(this.overdueEvent, gr, gr.start_date, gr.end_date);
+  },
+
+  /**********
+   *
+   * getNullPickupReminders - Get a list of records in state 'Ready for Pickup'
+   *                          that haven't been reminded before
+   *
+   * @param - None
+   * @return - array of sys_ids
+   *
+   **********/
+  getNullPickupReminders : function() {
+
+    var a = [];
+    var gr = new GlideRecord(this.loanerTableName);
+	var noticeTime = new GlideDateTime();
+	noticeTime.add(this.pickupLeadTime);
+	
+    gr.addQuery('state', 16);
+    gr.addQuery('pick_up_reminder', '');
+    gr.addQuery('start_date', '<=', noticeTime);
+    gr.query();
+
+    while (gr.next()) {
+      a.push(gr.sys_id.toString());
+    }
+    return a;
+  },
+
+  /**********
+   *
+   * sendPickupReminder - Queue an event to send a reminder and update the pickup reminder field
+   *
+   * @param - id: sys_id of the loaner record to check
+   * @return - None
+   *
+   **********/
+  sendPickupReminder : function(id) {
+
+    var gr = new GlideRecord(this.loanerTableName);
+
+    if (!gr.get(id)) {
+      gs.debug('>>>DEBUG: LoanerUtils: sendPickupReminder(): FAILED TO RETRIEVE RECORD');
+      return;
+    }
+
+    // Log the time the pickup reminder was sent and avoid sending again
+    gr.pick_up_reminder = new GlideDateTime().getDisplayValue();
+    gr.update();
+
+    // Send the pickup reminder
+    gs.eventQueue(this.pickupEvent, gr, gr.start_date, gr.end_date);
+    return;
+  },
+
+  /**********
+   *
+   * getNullReturnReminders - Get a list of records that need reminding to bring their item back
+   *
+   * @param - None
+   * @return - array of sys_ids
+   *
+   **********/
+  getNullReturnReminders : function() {
+
+    var a = [];
+    var gr = new GlideRecord(this.loanerTableName);
+	  
+	var noticeTime = new GlideDateTime();
+	var tempDate = noticeTime.add(this.returnRemindTime) + '';
+
+    gr.addQuery('state', 17);
+    gr.addQuery('return_reminder', '');
+    gr.addQuery('end_date', '<=', tempDate);
+    gr.query();
+
+    while (gr.next()) {
+      a.push(gr.sys_id.toString());
+    }
+    return a;
+  },
+
+  /**********
+   *
+   * setReturnReminder - Queue a return reminder and update field when reminder was sent
+   *
+   * @param - id: sys_id of the loaner record to check
+   * @return - None
+   *
+   **********/
+  sendReturnReminder : function(id) {
+
+    var gr = new GlideRecord(this.loanerTableName);
+
+    if (!gr.get(id)) {
+      gs.debug('>>>DEBUG: LoanerUtils: sendReturnReminder(): FAILED TO RETRIEVE RECORD');
+      return;
+    }
+
+    // Set this record to never remind again
+    gr.return_reminder = new GlideDateTime().getDisplayValue();
+    gr.update();
+
+    // Send the return reminder
+    gs.eventQueue(this.returnEvent, gr, gr.start_date, gr.end_date);
+  },
+
+  type: 'LoanerUtils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2020-08-26 20:14:21</sys_created_on>
+        <sys_id>a4d1a9ba65fe50107f44233f94cadf97</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>LoanerUtils</sys_name>
+        <sys_package display_value="Loaner Request" source="x_cdltd_loaner_req">6101738e657e10107f44233f94cadfdd</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Loaner Request">6101738e657e10107f44233f94cadfdd</sys_scope>
+        <sys_update_name>sys_script_include_a4d1a9ba65fe50107f44233f94cadf97</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2020-08-26 20:14:21</sys_updated_on>
+    </sys_script_include>
+</record_update>
