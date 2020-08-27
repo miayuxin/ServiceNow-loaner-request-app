@@ -20,5 +20,5 @@ The Loaner Request application will manage and track Loaner Requests through eas
 
 ## Process
 - Build an app on ServiceNow's internal platform with JavaScript.
-- Created client scripts and system properties; defined business rules and access control rules; designed the operation flow based on the requirements, 
+- Create client scripts and system properties; defined business rules and access control rules; designed the operation flow based on the requirements, 
 and deploy it on the ServiceNow store. 
